@@ -18,11 +18,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     src/GUI/main.cpp \
     src/GUI/mainmenu.cpp \
-    src/GUI/mainwindow.cpp
+    src/GUI/mainwindow.cpp \
+    src/GUI/singleplayer.cpp
 
 HEADERS += \
     src/GUI/mainmenu.h \
-    src/GUI/mainwindow.h
+    src/GUI/mainwindow.h \
+    src/GUI/singleplayer.h
 
 FORMS += \
     src/GUI/mainwindow.ui

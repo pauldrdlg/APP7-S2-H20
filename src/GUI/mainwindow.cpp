@@ -18,7 +18,6 @@ MainWindow::MainWindow(QWidget *parent)
     mainMenu_ = new MainMenu(this);
     setPalette(*mainMenu_->getPalette());
     setCentralWidget(mainMenu_);
-
 }
 
 MainWindow::~MainWindow()

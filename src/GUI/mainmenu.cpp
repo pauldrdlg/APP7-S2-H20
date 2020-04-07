@@ -1,8 +1,9 @@
 #include <QVBoxLayout>
 #include <QPixmap>
 #include "mainmenu.h"
+#include "mainwindow.h"
 
-MainMenu::MainMenu(QWidget *parent) : QWidget(parent)
+MainMenu::MainMenu(MainWindow *parent) : QWidget(parent), mainWindow_(parent)
 {
     // background image
     QPixmap bkgnd("./resources/background.jpg");                        // watchout for path of image if not found; images in resources folder
@@ -10,7 +11,7 @@ MainMenu::MainMenu(QWidget *parent) : QWidget(parent)
     background_ = new QPalette();
     background_->setBrush(QPalette::Background, bkgnd);
 
-    QVBoxLayout *vlayout = new QVBoxLayout(this);
+    QVBoxLayout* vlayout = new QVBoxLayout(this);
     vlayout->setSpacing(0);
     vlayout->setMargin(250);
 
@@ -26,10 +27,13 @@ MainMenu::MainMenu(QWidget *parent) : QWidget(parent)
     setLayout(vlayout);
 
     // connection button signals to slots
-    connect(singleP_, SIGNAL (released()), this, SLOT (doSomething()));
+    // for single player button
+    connect(singleP_, SIGNAL (released()), this, SLOT (goToSinglePlayerMode()));
 }
 
-void MainMenu::doSomething()
+void MainMenu::goToSinglePlayerMode()
 {
-    singleP_->setText("it was clicked");
+    SinglePlayer* sp = new SinglePlayer(mainWindow_);
+    mainWindow_->setPalette(*sp->getPalette());
+    mainWindow_->setCentralWidget(sp);
 }

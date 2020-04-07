@@ -5,23 +5,26 @@
 #include <QWidget>
 #include <QPalette>
 #include <QPushButton>
+#include "singleplayer.h"
 
+class MainWindow;
 class MainMenu : public QWidget
 {
     Q_OBJECT
 public:
-    explicit MainMenu(QWidget *parent = nullptr);
+    explicit MainMenu(MainWindow *parent = nullptr);
     QPalette* getPalette() {return background_;}
 
 private slots:
-    void doSomething();
+    void goToSinglePlayerMode();
 
 private:
 
-    QPushButton *singleP_;
-    QPushButton *multiP_;
-    QPushButton *highScore_;
-    QPalette *background_;
+    MainWindow* mainWindow_;
+    QPushButton* singleP_;
+    QPushButton* multiP_;
+    QPushButton* highScore_;
+    QPalette* background_;
 };
 
 #endif // MAINMENU_H
