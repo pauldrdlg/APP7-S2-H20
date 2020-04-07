@@ -13,6 +13,7 @@ class MainMenu : public QWidget
     Q_OBJECT
 public:
     explicit MainMenu(MainWindow *parent = nullptr);
+      ~MainMenu();
     QPalette* getPalette() {return background_;}
 
 private slots:

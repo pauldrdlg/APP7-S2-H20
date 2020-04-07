@@ -31,6 +31,14 @@ MainMenu::MainMenu(MainWindow *parent) : QWidget(parent), mainWindow_(parent)
     connect(singleP_, SIGNAL (released()), this, SLOT (goToSinglePlayerMode()));
 }
 
+MainMenu::~MainMenu()
+{
+    delete singleP_;
+    delete multiP_;
+    delete highScore_;
+    delete background_;
+}
+
 void MainMenu::goToSinglePlayerMode()
 {
     SinglePlayer* sp = new SinglePlayer(mainWindow_);
