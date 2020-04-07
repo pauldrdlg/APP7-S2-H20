@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QPushButton>
+#include "mainmenu.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -17,5 +19,7 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    MainMenu *mainMenu_;
+
 };
 #endif // MAINWINDOW_H
