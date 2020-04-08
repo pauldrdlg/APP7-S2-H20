@@ -18,8 +18,8 @@ public:
     ~MainWindow();
 
 private:
-    Ui::MainWindow* ui;
-    MainMenu* mainMenu_;
+    Ui::MainWindow* ui = nullptr;
+    MainMenu* mainMenu_ = nullptr;
 
 };
 #endif // MAINWINDOW_H

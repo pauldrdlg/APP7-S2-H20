@@ -21,11 +21,11 @@ private slots:
 
 private:
 
-    MainWindow* mainWindow_;
-    QPushButton* singleP_;
-    QPushButton* multiP_;
-    QPushButton* highScore_;
-    QPalette* background_;
+    MainWindow* mainWindow_ = nullptr;
+    QPushButton* singleP_ = nullptr;
+    QPushButton* multiP_ = nullptr;
+    QPushButton* highScore_ = nullptr;
+    QPalette* background_ = nullptr;
 };
 
 #endif // MAINMENU_H

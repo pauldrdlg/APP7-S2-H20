@@ -5,6 +5,7 @@
 #include <QWidget>
 #include <QPushButton>
 #include <QPalette>
+#include <QLabel>
 
 class SinglePlayer : public QWidget
 {
@@ -14,8 +15,14 @@ public:
      ~SinglePlayer();
     QPalette* getPalette() {return backgroundS_;}
 
+private slots:
+    void update();
+
 private:
-    QPalette* backgroundS_;
+    QPalette* backgroundS_ = nullptr;
+    std::vector<QLabel*> images_;
+    std::vector<std::string> glowingImages_;
+
 };
 
 #endif // SINGLEPLAYER_H
