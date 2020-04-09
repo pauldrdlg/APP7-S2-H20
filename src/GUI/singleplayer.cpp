@@ -1,6 +1,7 @@
 #include <QPixmap>
 #include <QGridLayout>
 #include <QTimer>
+#include <QInputDialog>
 #include <time.h>
 #include "singleplayer.h"
 
@@ -38,16 +39,36 @@ SinglePlayer::SinglePlayer(QWidget *parent) : QWidget(parent)
     // adding the glowing pictures titles to the vector
     glowingImages_ = {"./resources/red_glow.png", "./resources/blue_glow.png", "./resources/green_glow.png", "./resources/purple_glow.png"};
 
-    // timer to show which is the next image in the sequence to memorize
-    QTimer* timer = new QTimer;
-    int timerInterval = 1000;
-    timer->start(timerInterval);
-    connect(timer, SIGNAL (timeout()), this, SLOT (update()));
+    // timer to create pause before dialog box popup
+    QTimer::singleShot(500, this, SLOT(start()));
 }
 
 SinglePlayer::~SinglePlayer()
 {
     delete backgroundS_;
+}
+
+void SinglePlayer::start()
+{
+    bool ok;
+    QInputDialog* popUp = new QInputDialog();
+    popUp->getText(nullptr, "Get ready, ho",
+                   "Please enter name: ", QLineEdit::Normal,"", &ok);
+
+    // when user enters name and presses ok, start game
+    if (ok)
+    {
+        countDown();
+    }
+}
+
+void SinglePlayer::countDown()
+{
+    QTimer* timer = new QTimer;
+    int timerInterval = 1500;
+    timer->start(timerInterval);
+    connect(timer, SIGNAL (timeout()), this, SLOT (update()));
+
 }
 
 void SinglePlayer::update()
@@ -58,6 +79,7 @@ void SinglePlayer::update()
     // generate numbers
     int picToChange = rand() % 4;
 
+    // using randomly generated number, select which image is glowing; rest are default state
     for (int i = 0; i < 4; i++)
     {
         if (i == picToChange)

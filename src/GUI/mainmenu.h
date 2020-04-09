@@ -17,7 +17,7 @@ public:
     QPalette* getPalette() {return background_;}
 
 private slots:
-    void goToSinglePlayerMode();
+    void goToSinglePlayer();
 
 private:
 

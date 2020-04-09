@@ -16,13 +16,14 @@ public:
     QPalette* getPalette() {return backgroundS_;}
 
 private slots:
+    void start();
+    void countDown();
     void update();
 
 private:
     QPalette* backgroundS_ = nullptr;
     std::vector<QLabel*> images_;
     std::vector<std::string> glowingImages_;
-
 };
 
 #endif // SINGLEPLAYER_H

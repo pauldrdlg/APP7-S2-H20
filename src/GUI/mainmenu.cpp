@@ -28,7 +28,7 @@ MainMenu::MainMenu(MainWindow *parent) : QWidget(parent), mainWindow_(parent)
 
     // connection button signals to slots
     // for single player button
-    connect(singleP_, SIGNAL (released()), this, SLOT (goToSinglePlayerMode()));
+    connect(singleP_, SIGNAL (released()), this, SLOT (goToSinglePlayer()));
 }
 
 MainMenu::~MainMenu()
@@ -39,7 +39,7 @@ MainMenu::~MainMenu()
     delete background_;
 }
 
-void MainMenu::goToSinglePlayerMode()
+void MainMenu::goToSinglePlayer()
 {
     SinglePlayer* sp = new SinglePlayer(mainWindow_);
     mainWindow_->setPalette(*sp->getPalette());
