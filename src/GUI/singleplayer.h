@@ -7,6 +7,8 @@
 #include <QPalette>
 #include <QLabel>
 
+#include "gamerinfo.h"
+
 class SinglePlayer : public QWidget
 {
     Q_OBJECT
@@ -24,6 +26,7 @@ private:
     QPalette* backgroundS_ = nullptr;
     std::vector<QLabel*> images_;
     std::vector<std::string> glowingImages_;
+    GamerInfo info_;
 };
 
 #endif // SINGLEPLAYER_H
