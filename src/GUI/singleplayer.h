@@ -5,6 +5,7 @@
 #include <QWidget>
 #include <QPushButton>
 #include <QPalette>
+#include <QTimer>
 #include <QLabel>
 
 #include "gamerinfo.h"
@@ -21,12 +22,19 @@ private slots:
     void start();
     void countDown();
     void update();
+    void setLastPic();
 
 private:
     QPalette* backgroundS_ = nullptr;
     std::vector<QLabel*> images_;
-    std::vector<std::string> glowingImages_;
+    std::vector<std::string> glowingImages_= {"./resources/red_glow.png", "./resources/blue_glow.png", "./resources/green_glow.png", "./resources/purple_glow.png"};
+    std::vector<std::string> defaultState_ = {"./resources/red.png", "./resources/blue.png", "./resources/green.png", "./resources/purple.png"};
+
+
+    QTimer* timer_;
     GamerInfo info_;
+    unsigned int numberPics_ = 3;     // first round has 3 images to memorize
+    int last_;
 };
 
 #endif // SINGLEPLAYER_H

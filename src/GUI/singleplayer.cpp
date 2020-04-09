@@ -1,6 +1,5 @@
 #include <QPixmap>
 #include <QGridLayout>
-#include <QTimer>
 #include <QInputDialog>
 #include <time.h>
 #include "singleplayer.h"
@@ -30,17 +29,13 @@ SinglePlayer::SinglePlayer(QWidget *parent) : QWidget(parent)
 
     // adding the default pictures to the layout
     QGridLayout* layout = new QGridLayout();
-    layout->addWidget(images_[0], 0, 0, Qt::AlignCenter);
-    layout->addWidget(images_[1], 1, 0, Qt::AlignCenter);
-    layout->addWidget(images_[2], 0, 1, Qt::AlignCenter);
-    layout->addWidget(images_[3], 1, 1, Qt::AlignCenter);
+    layout->addWidget(images_[0], 0, 0, Qt::AlignCenter);       // red rat
+    layout->addWidget(images_[1], 1, 0, Qt::AlignCenter);       // blue rat
+    layout->addWidget(images_[2], 0, 1, Qt::AlignCenter);       // green rat
+    layout->addWidget(images_[3], 1, 1, Qt::AlignCenter);       // purple rat
 
     layout->setMargin(75);
     setLayout(layout);
-
-    // adding the glowing pictures titles to the vector
-    // the "glowing" pictures are the ones to be memorized
-    glowingImages_ = {"./resources/red_glow.png", "./resources/blue_glow.png", "./resources/green_glow.png", "./resources/purple_glow.png"};
 
     // timer to create pause before dialog box popup
     QTimer::singleShot(200, this, SLOT(start()));
@@ -75,33 +70,49 @@ void SinglePlayer::start()
 void SinglePlayer::countDown()
 {
     // set time between flashing images (ie which image is next in sequence to memorize)
-    QTimer* timer = new QTimer;
+    timer_= new QTimer;
     int timerInterval = 1500;     // set at 1.5 seconds
-    timer->start(timerInterval);
-    connect(timer, SIGNAL (timeout()), this, SLOT (update()));
+    timer_->start(timerInterval);
+    connect(timer_, SIGNAL (timeout()), this, SLOT (update()));
 }
 
 void SinglePlayer::update()
 {
-    std::vector<std::string> defaultState = {"./resources/red.png", "./resources/blue.png", "./resources/green.png", "./resources/purple.png"};
     // initialization seed
     srand(time(NULL));
     // generate numbers
     int picToChange = rand() % 4;
 
-    // using randomly generated number, select which image is glowing; rest are default state
+    // using randomly generated number, select which image is glowing; rest are default status
+    last_ = 0;
     for (int i = 0; i < 4; i++)
     {
         if (i == picToChange)
         {
+            // setting the pic of the rat to its "glowing" state
             images_[i]->setPixmap(QPixmap(glowingImages_[i].c_str()));
             // adding the image's number to the vector of sequence to memorize (gamer's info)
             info_.setList(picToChange);
-            qDebug() << info_.getList();
+            // memorizing the last picture that was selected
+            last_ = i;
         }
+
         else
         {
-            images_[i]->setPixmap(QPixmap(defaultState[i].c_str()));
+            // setting the pic of the rat back to normal
+            images_[i]->setPixmap(QPixmap(defaultState_[i].c_str()));
         }
     }
+
+    // once get to the number of pics for the current turn (first round is 3 pics, then goes up by one), stop the updating
+    if ((info_.getList()).size() >= numberPics_)
+    {
+        timer_->stop();
+        QTimer::singleShot(1500, this, SLOT(setLastPic()));
+    }
+}
+
+void SinglePlayer::setLastPic()
+{
+    images_[last_]->setPixmap(QPixmap(defaultState_[last_].c_str()));
 }
