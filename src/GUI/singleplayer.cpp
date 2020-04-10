@@ -1,9 +1,12 @@
 #include <QPixmap>
 #include <QGridLayout>
 #include <QInputDialog>
-#include <QSignalMapper>
+#include <QMessageBox>
+#include <QStringList>
 #include <time.h>
 #include "singleplayer.h"
+
+#include<iostream>
 
 #include <QDebug>
 
@@ -113,15 +116,63 @@ void SinglePlayer::setLastPic()
 {
     images_[last_]->setPixmap(QPixmap(defaultState_[last_].c_str()));
     numberPics_++;
-    bool ok;
-    QString popUp = QInputDialog::getText(nullptr, "IT'S DONE", "Enter the sequence: ", QLineEdit::Normal,"", &ok, Qt::MSWindowsFixedSizeDialogHint);
-    //qDebug() << popUp;
+    bool okButton;
+    QString popUp = QInputDialog::getText(nullptr, "IT'S DONE", "Enter the sequence: ", QLineEdit::Normal,"", &okButton, Qt::MSWindowsFixedSizeDialogHint);
+
+    // clearing the user anwsers; the user has to re-input the whole sequence from the beginning
+    info_.clearUserInput();
+    // splitting the Qstring
+    QStringList list;
+    list = popUp.split(QRegExp("\\s+"));
+
+    // turning the Qstring splits to ints and adding to user input list
+    for (auto& token: list)
+    {
+        bool okInput;
+        int newStr = token.toInt(&okInput);
+
+        if (okInput)
+        {
+            info_.addToListUser(newStr);
+        }
+
+        // case of invalid input
+        else
+        {
+            QMessageBox error;
+            error.setText("Invalid input; Retry ");
+            error.exec();
+        }
+    }
 
     // when user enters the sequence and presses ok, start game
-    if (ok)
+    // CHECK IF SIZE OK AS WELL
+    bool isCorrect = true;
+    if (okButton && info_.getUser().size() == info_.getList().size())
+    {
+        for (unsigned int i = 0; i < info_.getUser().size(); i++)
+        {
+            if (info_.getUserItem(i) != info_.getItem(i))
+            {
+                isCorrect = false;
+            }
+        }
+    }
+    else
+    {
+        isCorrect = false;
+    }
+
+    if (isCorrect)
     {
         info_.generateSingle();
         countDown();
+    }
+   else
+    {
+        QMessageBox endGame;
+        endGame.setText("You lose.");
+        endGame.exec();
     }
 }
 
