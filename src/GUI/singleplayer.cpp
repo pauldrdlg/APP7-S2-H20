@@ -22,7 +22,7 @@ SinglePlayer::SinglePlayer(QWidget *parent) : QWidget(parent)
     // constructing vector of images
     for(int i = 0; i < 4; i++)
     {
-        images_.push_back(new QLabel());
+        images_.push_back(new ClickableLabel());
     }
 
     // adding the default pictures to the vector
@@ -33,13 +33,31 @@ SinglePlayer::SinglePlayer(QWidget *parent) : QWidget(parent)
 
     // adding the default pictures to the layout
     QGridLayout* layout = new QGridLayout();
+    doneButton_ = new QPushButton("Finished ");
     layout->addWidget(images_[0], 0, 0, Qt::AlignCenter);       // red rat
     layout->addWidget(images_[1], 1, 0, Qt::AlignCenter);       // blue rat
     layout->addWidget(images_[2], 0, 1, Qt::AlignCenter);       // green rat
     layout->addWidget(images_[3], 1, 1, Qt::AlignCenter);       // purple rat
+    layout->addWidget(doneButton_);
 
     layout->setMargin(75);
     setLayout(layout);
+
+
+    connect(images_[0], SIGNAL (pressed()), this, SLOT (testR()));
+    connect(images_[0], SIGNAL (released()), this, SLOT (testRR()));
+
+    connect(images_[1], SIGNAL (pressed()), this, SLOT (testB()));
+    connect(images_[1], SIGNAL (released()), this, SLOT (testBB()));
+
+    connect(images_[2], SIGNAL (pressed()), this, SLOT (testG()));
+    connect(images_[2], SIGNAL (released()), this, SLOT (testGG()));
+
+    connect(images_[3], SIGNAL (pressed()), this, SLOT (testP()));
+    connect(images_[3], SIGNAL (released()), this, SLOT (testPP()));
+
+    connect(doneButton_, SIGNAL (clicked()), this, SLOT (checkAnwsers()));
+
 
     // timer to create pause before dialog box popup
     QTimer::singleShot(200, this, SLOT(start()));
@@ -84,12 +102,6 @@ void SinglePlayer::countDown()
 
 void SinglePlayer::update()
 {
-//    // initialization seed
-//    srand(time(NULL));
-//    // generate numbers
-//  int picToChange = rand() % 4;
-
-
     // using randomly generated number, select which image is glowing; rest are default status
     last_ = 0;
     for (int i = 0; i < 4; i++)
@@ -116,39 +128,23 @@ void SinglePlayer::setLastPic()
 {
     images_[last_]->setPixmap(QPixmap(defaultState_[last_].c_str()));
     numberPics_++;
-    bool okButton;
-    QString popUp = QInputDialog::getText(nullptr, "IT'S DONE", "Enter the sequence: ", QLineEdit::Normal,"", &okButton, Qt::MSWindowsFixedSizeDialogHint);
+//    bool okButton;
+//    QString popUp = QInputDialog::getText(nullptr, "IT'S DONE", "Enter the sequence: ", QLineEdit::Normal,"", &okButton, Qt::MSWindowsFixedSizeDialogHint);
+
+    QMessageBox done;
+    done.setText("Done - Please enter the sequence and press the Finished button when done. ");
+    done.exec();
 
     // clearing the user anwsers; the user has to re-input the whole sequence from the beginning
     info_.clearUserInput();
-    // splitting the Qstring
-    QStringList list;
-    list = popUp.split(QRegExp("\\s+"));
+}
 
-    // turning the Qstring splits to ints and adding to user input list
-    for (auto& token: list)
-    {
-        bool okInput;
-        int newStr = token.toInt(&okInput);
-
-        if (okInput)
-        {
-            info_.addToListUser(newStr);
-        }
-
-        // case of invalid input
-        else
-        {
-            QMessageBox error;
-            error.setText("Invalid input; Retry ");
-            error.exec();
-        }
-    }
-
+void SinglePlayer::checkAnwsers()
+{
     // when user enters the sequence and presses ok, start game
     // CHECK IF SIZE OK AS WELL
     bool isCorrect = true;
-    if (okButton && info_.getUser().size() == info_.getList().size())
+    if (info_.getUser().size() == info_.getList().size())
     {
         for (unsigned int i = 0; i < info_.getUser().size(); i++)
         {
@@ -172,9 +168,37 @@ void SinglePlayer::setLastPic()
     {
         QMessageBox endGame;
         endGame.setText("You lose.");
+        qDebug() << info_.getUser();
+        qDebug() << info_.getList();
         endGame.exec();
     }
 }
+
+
+//    // splitting the Qstring
+//    QStringList list;
+//    list = popUp.split(QRegExp("\\s+"));
+
+//    // turning the Qstring splits to ints and adding to user input list
+//    for (auto& token: list)
+//    {
+//        bool okInput;
+//        int newStr = token.toInt(&okInput);
+
+//        if (okInput)
+//        {
+//            info_.addToListUser(newStr);
+//        }
+
+//        // case of invalid input
+//        else
+//        {
+//            QMessageBox error;
+//            error.setText("Invalid input; Retry ");
+//            error.exec();
+//        }
+//    }
+
 
 void SinglePlayer::nextTurn()
 {
@@ -185,5 +209,58 @@ void SinglePlayer::nextTurn()
         images_[pos]->setPixmap(QPixmap(glowingImages_[pos].c_str()));
     }
 }
+
+void SinglePlayer::testR()
+{
+    images_[0]->setPixmap(QPixmap(glowingImages_[0].c_str()));
+    info_.addToListUser(0);
+}
+
+void SinglePlayer::testRR()
+{
+    images_[0]->setPixmap(QPixmap(defaultState_[0].c_str()));
+}
+
+
+void SinglePlayer::testB()
+{
+    images_[1]->setPixmap(QPixmap(glowingImages_[1].c_str()));
+    info_.addToListUser(1);
+}
+
+void SinglePlayer::testBB()
+{
+    images_[1]->setPixmap(QPixmap(defaultState_[1].c_str()));
+}
+
+
+void SinglePlayer::testG()
+{
+    images_[2]->setPixmap(QPixmap(glowingImages_[2].c_str()));
+    info_.addToListUser(2);
+}
+
+
+void SinglePlayer::testGG()
+{
+    images_[2]->setPixmap(QPixmap(defaultState_[2].c_str()));
+}
+
+
+void SinglePlayer::testP()
+{
+    images_[3]->setPixmap(QPixmap(glowingImages_[3].c_str()));
+    info_.addToListUser(3);
+}
+
+void SinglePlayer::testPP()
+{
+    images_[3]->setPixmap(QPixmap(defaultState_[3].c_str()));
+}
+
+
+
+
+
 
 

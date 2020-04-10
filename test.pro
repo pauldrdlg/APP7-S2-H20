@@ -16,6 +16,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    src/GUI/clickablelabel.cpp \
     src/GUI/gamerinfo.cpp \
     src/GUI/main.cpp \
     src/GUI/mainmenu.cpp \
@@ -23,6 +24,7 @@ SOURCES += \
     src/GUI/singleplayer.cpp
 
 HEADERS += \
+    src/GUI/clickablelabel.h \
     src/GUI/gamerinfo.h \
     src/GUI/mainmenu.h \
     src/GUI/mainwindow.h \
