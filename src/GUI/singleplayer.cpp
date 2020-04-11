@@ -3,10 +3,10 @@
 #include <QInputDialog>
 #include <QMessageBox>
 #include <QStringList>
+#include <QCoreApplication>
 #include <time.h>
-#include "singleplayer.h"
 
-#include<iostream>
+#include "singleplayer.h"
 
 SinglePlayer::SinglePlayer(QWidget *parent) : QWidget(parent)
 {
@@ -161,9 +161,24 @@ void SinglePlayer::checkAnwsers()
     }
    else
     {
-        QMessageBox endGame;
-        endGame.setText("You lose.");
-        endGame.exec();
+        QMessageBox* endGame = new QMessageBox;
+        endGame->setWindowTitle("END GAME ");
+        endGame->setText("You lose. Play again? ");
+        endGame->setStandardButtons(QMessageBox::Yes);
+        endGame->addButton(QMessageBox::No);
+        endGame->setDefaultButton(QMessageBox::No);
+
+        if (endGame->exec() == QMessageBox::Yes)
+        {
+            // restart new game; clear old list and generate new sequence
+            info_.clearListMemorize();
+            info_.generateListInit();
+            countDown();
+        }
+        else
+        {
+            QCoreApplication::quit();
+        }
     }
 }
 

@@ -25,6 +25,7 @@ public:
     void generateSingle();
     bool checkEnd();
     void clearUserInput() {gamerInput_.clear();}
+    void clearListMemorize() {listToMemorize_.clear();}
 
 private:
     QString name_;
