@@ -8,8 +8,6 @@
 
 #include<iostream>
 
-#include <QDebug>
-
 SinglePlayer::SinglePlayer(QWidget *parent) : QWidget(parent)
 {
     // background image
@@ -57,7 +55,6 @@ SinglePlayer::SinglePlayer(QWidget *parent) : QWidget(parent)
     connect(images_[3], SIGNAL (released()), this, SLOT (testPP()));
 
     connect(doneButton_, SIGNAL (clicked()), this, SLOT (checkAnwsers()));
-
 
     // timer to create pause before dialog box popup
     QTimer::singleShot(200, this, SLOT(start()));
@@ -128,11 +125,9 @@ void SinglePlayer::setLastPic()
 {
     images_[last_]->setPixmap(QPixmap(defaultState_[last_].c_str()));
     numberPics_++;
-//    bool okButton;
-//    QString popUp = QInputDialog::getText(nullptr, "IT'S DONE", "Enter the sequence: ", QLineEdit::Normal,"", &okButton, Qt::MSWindowsFixedSizeDialogHint);
 
     QMessageBox done;
-    done.setText("Done - Please enter the sequence and press the Finished button when done. ");
+    done.setText("Done ");
     done.exec();
 
     // clearing the user anwsers; the user has to re-input the whole sequence from the beginning
@@ -168,37 +163,9 @@ void SinglePlayer::checkAnwsers()
     {
         QMessageBox endGame;
         endGame.setText("You lose.");
-        qDebug() << info_.getUser();
-        qDebug() << info_.getList();
         endGame.exec();
     }
 }
-
-
-//    // splitting the Qstring
-//    QStringList list;
-//    list = popUp.split(QRegExp("\\s+"));
-
-//    // turning the Qstring splits to ints and adding to user input list
-//    for (auto& token: list)
-//    {
-//        bool okInput;
-//        int newStr = token.toInt(&okInput);
-
-//        if (okInput)
-//        {
-//            info_.addToListUser(newStr);
-//        }
-
-//        // case of invalid input
-//        else
-//        {
-//            QMessageBox error;
-//            error.setText("Invalid input; Retry ");
-//            error.exec();
-//        }
-//    }
-
 
 void SinglePlayer::nextTurn()
 {

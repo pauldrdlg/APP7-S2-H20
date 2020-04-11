@@ -22,15 +22,25 @@ unsigned int GamerInfo::getNext()
 void GamerInfo::generateListInit()
 {
     // generate vector for first turn ie 3 images to memorize
-    for (int i = 0; i < 3; i++)
-    {
-        listToMemorize_.push_back(rand()% 4);
-    }
+    // insert first number
+    listToMemorize_.push_back(rand() % 4);
+    // insert 2 next ones
+    generateSingle();
+    generateSingle();
 }
 
 void GamerInfo::generateSingle()
 {
-    listToMemorize_.push_back(rand()% 4);
+    int last = listToMemorize_.back();
+    int newNbre = rand() % 4;
+
+    // checking for duplicates; if the same as last, will generate new one
+    while (newNbre == last)
+    {
+        newNbre = rand() % 4;
+    }
+
+    listToMemorize_.push_back(newNbre);
     iterator_ = 0;
 }
 
