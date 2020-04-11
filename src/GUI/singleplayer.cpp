@@ -41,7 +41,6 @@ SinglePlayer::SinglePlayer(QWidget *parent) : QWidget(parent)
     layout->setMargin(75);
     setLayout(layout);
 
-
     connect(images_[0], SIGNAL (pressed()), this, SLOT (testR()));
     connect(images_[0], SIGNAL (released()), this, SLOT (testRR()));
 
@@ -127,7 +126,8 @@ void SinglePlayer::setLastPic()
     numberPics_++;
 
     QMessageBox done;
-    done.setText("Done ");
+    done.setWindowTitle("DONE");
+    done.setText("Your turn - repeat the sequence by clicking the rats.");
     done.exec();
 
     // clearing the user anwsers; the user has to re-input the whole sequence from the beginning
@@ -157,13 +157,15 @@ void SinglePlayer::checkAnwsers()
     if (isCorrect)
     {
         info_.generateSingle();
+        info_.increaseScore();
         countDown();
     }
    else
     {
         QMessageBox* endGame = new QMessageBox;
         endGame->setWindowTitle("END GAME ");
-        endGame->setText("You lose. Play again? ");
+        QString text = QString("You lose.\nPlay again?\n\nFINAL SCORE: %1").arg(info_.getScore());
+        endGame->setText(text);
         endGame->setStandardButtons(QMessageBox::Yes);
         endGame->addButton(QMessageBox::No);
         endGame->setDefaultButton(QMessageBox::No);

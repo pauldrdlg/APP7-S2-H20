@@ -18,13 +18,16 @@ public:
 
 private slots:
     void goToSinglePlayer();
+    void quitApp();
+    void howTo();
 
 private:
 
     MainWindow* mainWindow_ = nullptr;
     QPushButton* singleP_ = nullptr;
-    QPushButton* multiP_ = nullptr;
+    QPushButton* howToPlay_ = nullptr;
     QPushButton* highScore_ = nullptr;
+    QPushButton* quit_ = nullptr;
     QPalette* background_ = nullptr;
 };
 
