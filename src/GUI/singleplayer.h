@@ -32,6 +32,9 @@ private slots:
     void addGreenRat();
     void addPurpleRat();
 
+    void onClickedFinish();
+    void defaultFinish();
+
 private:
     QPalette* backgroundS_ = nullptr;
     std::vector<ClickableLabel*> images_;

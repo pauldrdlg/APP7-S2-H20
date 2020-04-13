@@ -57,6 +57,7 @@ MainMenu::~MainMenu()
     delete singleP_;
     delete howToPlay_;
     delete background_;
+    delete quit_;
 }
 
 void MainMenu::goToSinglePlayer()

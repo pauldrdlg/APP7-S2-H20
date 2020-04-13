@@ -27,21 +27,33 @@ SinglePlayer::SinglePlayer(QWidget *parent) : QWidget(parent)
     // adding the default pictures to the layout
     QGridLayout* layout = new QGridLayout();
     doneButton_ = new QPushButton("Finished ");
+    doneButton_->setFixedWidth(250);
+    doneButton_->setFixedHeight(70);
+
     layout->addWidget(images_[0], 0, 0, Qt::AlignCenter);       // red rat
     layout->addWidget(images_[1], 1, 0, Qt::AlignCenter);       // blue rat
     layout->addWidget(images_[2], 0, 1, Qt::AlignCenter);       // green rat
     layout->addWidget(images_[3], 1, 1, Qt::AlignCenter);       // purple rat
-    layout->addWidget(doneButton_);
 
-    layout->setMargin(75);
+    // set style for the finished button
+    doneButton_->setStyleSheet("background-color: #84090c; font-weight: bold; color: white;"
+                        "font-size: 20px; border-radius: 10px;");
+
+    layout->addWidget(doneButton_, 2, 0, 2, 0, Qt::AlignCenter);
+    layout->setMargin(90);
+    layout->setSpacing(15);
+
     setLayout(layout);
 
+    // connecting singals to slots for the 4 rats
     connect(images_[0], SIGNAL (pressed()), this, SLOT (addRedRat()));
     connect(images_[1], SIGNAL (pressed()), this, SLOT (addBlueRat()));
     connect(images_[2], SIGNAL (pressed()), this, SLOT (addGreenRat()));
     connect(images_[3], SIGNAL (pressed()), this, SLOT (addPurpleRat()));
 
-    connect(doneButton_, SIGNAL (clicked()), this, SLOT (checkAnwsers()));
+    // connecting the signal for the 'finished' button
+    connect(doneButton_, SIGNAL (pressed()), this, SLOT (onClickedFinish()));
+    connect(doneButton_, SIGNAL (released()), this, SLOT (checkAnwsers()));
 
     // timer to create pause before dialog box popup
     QTimer::singleShot(200, this, SLOT(start()));
@@ -200,6 +212,20 @@ void SinglePlayer::addGreenRat()
 void SinglePlayer::addPurpleRat()
 {
     info_.addToListUser(3);
+}
+
+void SinglePlayer::onClickedFinish()
+{
+
+    doneButton_->setStyleSheet("background-color: #B7FF64; font-weight: bold; color: black;"
+                               "font-size: 20px; border-radius: 10px;");
+    QTimer::singleShot(150, this, SLOT (defaultFinish()));
+}
+
+void SinglePlayer::defaultFinish()
+{
+    doneButton_->setStyleSheet("background-color: #84090c; font-weight: bold; color: white;"
+                               "font-size: 20px; border-radius: 10px;");
 }
 
 
