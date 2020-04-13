@@ -152,7 +152,7 @@ void SinglePlayer::checkAnwsers()
     {
         QMessageBox* endGame = new QMessageBox;
         endGame->setWindowTitle("END GAME ");
-        QString text = QString("You lose.\nPlay again?\n\nFINAL SCORE: %1").arg(info_.getScore());
+        QString text = QString("You lose, %1.\nPlay again?\n\nFINAL SCORE: %2").arg(info_.getName()).arg(info_.getScore());
         endGame->setText(text);
         endGame->setStandardButtons(QMessageBox::Yes);
         endGame->addButton(QMessageBox::No);
