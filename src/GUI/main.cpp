@@ -8,11 +8,11 @@ int main(int argc, char *argv[])
     // initialization seed
     srand(time(NULL));
 
-    QApplication a(argc, argv);
-    MainWindow w;
+    QApplication app(argc, argv);
+    MainWindow window;
 
-    w.setFixedSize(800, 600);
-    w.show();
+    window.setFixedSize(800, 600);
+    window.show();
 
-    return a.exec();
+    return app.exec();
 }

@@ -37,11 +37,11 @@ SinglePlayer::SinglePlayer(QWidget *parent) : QWidget(parent)
 
     // set style for the finished button
     doneButton_->setStyleSheet("background-color: #84090c; font-weight: bold; color: white;"
-                        "font-size: 20px; border-radius: 10px;");
+                               "font-size: 20px; border-radius: 10px;");
 
     layout->addWidget(doneButton_, 2, 0, 2, 0, Qt::AlignCenter);
-    layout->setMargin(90);
-    layout->setSpacing(15);
+    layout->setMargin(85);
+    layout->setSpacing(20);
 
     setLayout(layout);
 
@@ -73,18 +73,12 @@ SinglePlayer::~SinglePlayer()
 void SinglePlayer::start()
 {
     // putting a dialog box for user to inpput name
-    bool ok;
-    QString popUp = QInputDialog::getText(nullptr, "GET READY, HO", "Please enter name : ", QLineEdit::Normal,"", &ok, Qt::MSWindowsFixedSizeDialogHint);
-    // recuperate information user put in and store it in name (of Gamer info)
-    info_.setName(popUp);
-
-    // when user enters name and presses ok, start game
-    if (ok)
-    {
-        // start game with 3 pictures to memorize
-        info_.generateListInit();
-        countDown();
-    }
+    nameInputDialog_ = new QInputDialog(this);
+    nameInputDialog_->setStyleSheet("background-color: #84090c; font-weight: bold; color: white; font-size: 20px");
+    nameInputDialog_->setLabelText("Please enter name ");
+    nameInputDialog_->setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
+    layout()->addWidget(nameInputDialog_);
+    connect(nameInputDialog_, SIGNAL (accepted()), this, SLOT (nameEntered()));
 }
 
 void SinglePlayer::countDown()
@@ -126,8 +120,10 @@ void SinglePlayer::setLastPic()
     numberPics_++;
 
     QMessageBox done;
-    done.setWindowTitle("DONE");
     done.setText("Your turn - repeat the sequence by clicking the rats.");
+    done.setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
+    done.setStyleSheet("background-color: #84090c; font-weight: bold; color: white; "
+                       "font-size: 20px; padding-left: 0px; padding-right: 25px;");
     done.exec();
 
     // clearing the user anwsers; the user has to re-input the whole sequence from the beginning
@@ -156,19 +152,29 @@ void SinglePlayer::checkAnwsers()
 
     if (isCorrect)
     {
+        QMessageBox* wellDone = new QMessageBox();
+        wellDone->setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
+        QString text = QString("Well played, %1").arg(info_.getName());
+        wellDone->setText(text);
+        wellDone->setStyleSheet("background-color: #84090c; font-weight: bold; color: white; "
+                                "font-size: 20px; padding-left: 0px; padding-right: 25px;");
+        wellDone->exec();
+
         info_.generateSingle();
         info_.increaseScore();
         countDown();
     }
    else
     {
-        QMessageBox* endGame = new QMessageBox;
-        endGame->setWindowTitle("END GAME ");
+        QMessageBox* endGame = new QMessageBox();
+        endGame->setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
         QString text = QString("You lose, %1.\nPlay again?\n\nFINAL SCORE: %2").arg(info_.getName()).arg(info_.getScore());
         endGame->setText(text);
         endGame->setStandardButtons(QMessageBox::Yes);
         endGame->addButton(QMessageBox::No);
         endGame->setDefaultButton(QMessageBox::No);
+        endGame->setStyleSheet("background-color: #84090c; font-weight: bold; color: white; "
+                               "font-size: 20px; padding-left: 0px; padding-right: 25px;");
 
         if (endGame->exec() == QMessageBox::Yes)
         {
@@ -226,6 +232,17 @@ void SinglePlayer::defaultFinish()
 {
     doneButton_->setStyleSheet("background-color: #84090c; font-weight: bold; color: white;"
                                "font-size: 20px; border-radius: 10px;");
+}
+
+void SinglePlayer::nameEntered()
+{
+    QString text = nameInputDialog_->textValue();
+    // retreive information user put in and store it in name (of Gamer info)
+    info_.setName(text);
+
+    // when user enters name and presses ok, start game
+    info_.generateListInit();
+    countDown();
 }
 
 

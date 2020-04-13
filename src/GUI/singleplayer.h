@@ -7,6 +7,7 @@
 #include <QPalette>
 #include <QTimer>
 #include <QLabel>
+#include <QInputDialog>
 
 #include "gamerinfo.h"
 #include "clickablelabel.h"
@@ -35,6 +36,8 @@ private slots:
     void onClickedFinish();
     void defaultFinish();
 
+    void nameEntered();
+
 private:
     QPalette* backgroundS_ = nullptr;
     std::vector<ClickableLabel*> images_;
@@ -42,6 +45,7 @@ private:
     std::vector<std::string> defaultState_ = {"./resources/red.png", "./resources/blue.png", "./resources/green.png", "./resources/purple.png"};
     QTimer* timer_;
     GamerInfo info_;
+    QInputDialog* nameInputDialog_;
     unsigned int numberPics_ = 3;     // first round has 3 images to memorize
     int last_;
     QPushButton* doneButton_;

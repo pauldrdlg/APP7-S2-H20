@@ -69,16 +69,19 @@ void MainMenu::goToSinglePlayer()
 
 void MainMenu::howTo()
 {
-    QMessageBox* howToPlay = new QMessageBox;
-    howToPlay->setWindowTitle("HOW TO PLAY ");
-    howToPlay->setText("Enter your name\nOnce you click the OK button, the game starts\nThree images will glow, you must remember the sequence and repeat it to win\nThe games continue until you fail.");
-    howToPlay->exec();
+    QMessageBox* howToPlayBox = new QMessageBox(this);
+    howToPlayBox->setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
+    howToPlayBox->setText("Once you click the OK button after entering your name, the game starts.\n"
+                       "Three images will glow, you must remember the sequence and repeat it to win.\nThe game continues until you fail.");
+    howToPlayBox->setStyleSheet("background-color: #84090c; font-weight: bold; color: white;"
+                                "font-size: 25px; padding-left: 0px; padding-right: 15px;");
+    howToPlayBox->exec();
 }
 
 void MainMenu::onClickedPlay()
 {
     singleP_->setStyleSheet("background-color: #B7FF64; font-weight: bold; color: black;"
-                        "font-size: 20px; border-radius: 10px;");
+                            "font-size: 20px; border-radius: 10px;");
 }
 
 void MainMenu::onClickedHowTo()
