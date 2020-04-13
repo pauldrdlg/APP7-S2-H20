@@ -21,6 +21,7 @@ SOURCES += \
     src/GUI/main.cpp \
     src/GUI/mainmenu.cpp \
     src/GUI/mainwindow.cpp \
+    src/GUI/rat.cpp \
     src/GUI/singleplayer.cpp
 
 HEADERS += \
@@ -28,6 +29,7 @@ HEADERS += \
     src/GUI/gamerinfo.h \
     src/GUI/mainmenu.h \
     src/GUI/mainwindow.h \
+    src/GUI/rat.h \
     src/GUI/singleplayer.h
 
 FORMS += \

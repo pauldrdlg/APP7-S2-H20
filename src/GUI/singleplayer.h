@@ -27,14 +27,10 @@ private slots:
     void nextTurn();
     void checkAnwsers();
 
-    void testR();
-    void testRR();
-    void testB();
-    void testBB();
-    void testG();
-    void testGG();
-    void testP();
-    void testPP();
+    void addRedRat();
+    void addBlueRat();
+    void addGreenRat();
+    void addPurpleRat();
 
 private:
     QPalette* backgroundS_ = nullptr;

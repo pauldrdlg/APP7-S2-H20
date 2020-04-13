@@ -20,6 +20,9 @@ protected:
     void mousePressEvent(QMouseEvent *ev);
     void mouseReleaseEvent(QMouseEvent* ev);
 
+private:
+    virtual void onClicked() {}
+    virtual void onReleased() {}
 };
 
 #endif // CLICKABLELABEL_H

@@ -7,6 +7,7 @@
 #include <time.h>
 
 #include "singleplayer.h"
+#include "rat.h"
 
 SinglePlayer::SinglePlayer(QWidget *parent) : QWidget(parent)
 {
@@ -17,16 +18,10 @@ SinglePlayer::SinglePlayer(QWidget *parent) : QWidget(parent)
     backgroundS_->setBrush(QPalette::Background, bkgnd);
 
     //adding images
-    // constructing vector of images
+    // constructing vector of images of default
     for(int i = 0; i < 4; i++)
     {
-        images_.push_back(new ClickableLabel());
-    }
-
-    // adding the default pictures to the vector
-    for(int i = 0; i < 4; i++)
-    {
-        images_[i]->setPixmap(QPixmap(defaultState_[i].c_str()));
+        images_.push_back(new Rat(glowingImages_[i], defaultState_[i]));
     }
 
     // adding the default pictures to the layout
@@ -41,17 +36,10 @@ SinglePlayer::SinglePlayer(QWidget *parent) : QWidget(parent)
     layout->setMargin(75);
     setLayout(layout);
 
-    connect(images_[0], SIGNAL (pressed()), this, SLOT (testR()));
-    connect(images_[0], SIGNAL (released()), this, SLOT (testRR()));
-
-    connect(images_[1], SIGNAL (pressed()), this, SLOT (testB()));
-    connect(images_[1], SIGNAL (released()), this, SLOT (testBB()));
-
-    connect(images_[2], SIGNAL (pressed()), this, SLOT (testG()));
-    connect(images_[2], SIGNAL (released()), this, SLOT (testGG()));
-
-    connect(images_[3], SIGNAL (pressed()), this, SLOT (testP()));
-    connect(images_[3], SIGNAL (released()), this, SLOT (testPP()));
+    connect(images_[0], SIGNAL (pressed()), this, SLOT (addRedRat()));
+    connect(images_[1], SIGNAL (pressed()), this, SLOT (addBlueRat()));
+    connect(images_[2], SIGNAL (pressed()), this, SLOT (addGreenRat()));
+    connect(images_[3], SIGNAL (pressed()), this, SLOT (addPurpleRat()));
 
     connect(doneButton_, SIGNAL (clicked()), this, SLOT (checkAnwsers()));
 
@@ -194,53 +182,26 @@ void SinglePlayer::nextTurn()
     }
 }
 
-void SinglePlayer::testR()
+void SinglePlayer::addRedRat()
 {
-    images_[0]->setPixmap(QPixmap(glowingImages_[0].c_str()));
     info_.addToListUser(0);
 }
 
-void SinglePlayer::testRR()
+void SinglePlayer::addBlueRat()
 {
-    images_[0]->setPixmap(QPixmap(defaultState_[0].c_str()));
-}
-
-
-void SinglePlayer::testB()
-{
-    images_[1]->setPixmap(QPixmap(glowingImages_[1].c_str()));
     info_.addToListUser(1);
 }
 
-void SinglePlayer::testBB()
+void SinglePlayer::addGreenRat()
 {
-    images_[1]->setPixmap(QPixmap(defaultState_[1].c_str()));
-}
-
-
-void SinglePlayer::testG()
-{
-    images_[2]->setPixmap(QPixmap(glowingImages_[2].c_str()));
     info_.addToListUser(2);
 }
 
-
-void SinglePlayer::testGG()
+void SinglePlayer::addPurpleRat()
 {
-    images_[2]->setPixmap(QPixmap(defaultState_[2].c_str()));
-}
-
-
-void SinglePlayer::testP()
-{
-    images_[3]->setPixmap(QPixmap(glowingImages_[3].c_str()));
     info_.addToListUser(3);
 }
 
-void SinglePlayer::testPP()
-{
-    images_[3]->setPixmap(QPixmap(defaultState_[3].c_str()));
-}
 
 
 
