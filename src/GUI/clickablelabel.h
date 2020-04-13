@@ -10,7 +10,7 @@ class ClickableLabel : public QLabel
     Q_OBJECT
 public:
     explicit ClickableLabel();
-    ~ClickableLabel();
+    virtual ~ClickableLabel();
 
 signals:
     void pressed();

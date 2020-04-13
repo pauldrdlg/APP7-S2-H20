@@ -10,7 +10,7 @@ MainMenu::MainMenu(MainWindow *parent) : QWidget(parent), mainWindow_(parent)
 {
     // background image
     QPixmap bkgnd("./resources/background.jpg");                        // watchout for path of image if not found; images in resources folder
-    bkgnd = bkgnd.scaled(parent->size(), Qt::IgnoreAspectRatio);
+    bkgnd = bkgnd.scaled({800,600}, Qt::IgnoreAspectRatio);
     background_ = new QPalette();
     background_->setBrush(QPalette::Background, bkgnd);
 

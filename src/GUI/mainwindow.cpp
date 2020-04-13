@@ -3,14 +3,11 @@
 
 #include "mainwindow.h"
 #include "mainmenu.h"
-#include "ui_mainwindow.h"
+
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
-    , ui(new Ui::MainWindow)
 {
-    ui->setupUi(this);
-
     // title
     setWindowTitle("TEMPS SAOUL VIENS-TU?");
 
@@ -22,5 +19,4 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow()
 {
-    delete ui;
 }
