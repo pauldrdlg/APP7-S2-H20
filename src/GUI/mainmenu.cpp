@@ -1,7 +1,15 @@
+/*
+File name: mainmenu.cpp
+Author: J. LaFerriere
+Date: 14-04-2020
+Description: Implementation of the MainMenu class
+*/
+
 #include <QVBoxLayout>
 #include <QPixmap>
 #include <QMessageBox>
 #include <QCoreApplication>
+#include <QString>
 
 #include "mainmenu.h"
 #include "mainwindow.h"
@@ -19,9 +27,9 @@ MainMenu::MainMenu(MainWindow *parent) : QWidget(parent), mainWindow_(parent)
     vlayout->setMargin(250);
 
     // creation of main buttons ie single player, multi player and high scores
-    singleP_ = new QPushButton("Play");
-    howToPlay_ = new QPushButton("How to play");
-    quit_ = new QPushButton("Quit");
+    singleP_ = new QPushButton("Jouer");
+    howToPlay_ = new QPushButton("Comment jouer");
+    quit_ = new QPushButton("Quitter");
 
     // setting size of buttons
     singleP_->setFixedHeight(35);
@@ -60,6 +68,7 @@ MainMenu::~MainMenu()
     delete quit_;
 }
 
+// Function to set the background/display when the player clicks the Play button
 void MainMenu::goToSinglePlayer()
 {
     SinglePlayer* sp = new SinglePlayer(mainWindow_);
@@ -67,23 +76,30 @@ void MainMenu::goToSinglePlayer()
     mainWindow_->setCentralWidget(sp);
 }
 
+// Function that generates a popup with the game's rules when the player clicks the How to button 
 void MainMenu::howTo()
 {
     QMessageBox* howToPlayBox = new QMessageBox(this);
     howToPlayBox->setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
-    howToPlayBox->setText("Once you click the OK button after entering your name, the game starts.\n"
-                       "Three images will glow, you must remember the sequence and repeat it to win.\nThe game continues until you fail.");
+
+	QString text = QString::fromUtf8("Le jeu commence lorsque vous clickez sur le boutton OK apr\xc3\xa8s avoir entr\xc3\xa9 votre nom.\n"
+					"Pour commencer, 3 images vont s'allumer. Vous devez r\xc3\xa9p\xc3\xa9ter la s\xc3\xa9quence. "
+					"Une image sera rajout%1e \xc3\xa0 chaque tour.\nLe jeu continue jusqu'\xc3\xa0 ce que vous %1chouez.").arg("\xc3\xa9");
+
+    howToPlayBox->setText(text);
     howToPlayBox->setStyleSheet("background-color: #84090c; font-weight: bold; color: white;"
                                 "font-size: 25px; padding-left: 0px; padding-right: 15px;");
     howToPlayBox->exec();
 }
 
+// Function to generate the animation when the player clicks the Play button 
 void MainMenu::onClickedPlay()
 {
     singleP_->setStyleSheet("background-color: #B7FF64; font-weight: bold; color: black;"
                             "font-size: 20px; border-radius: 10px;");
 }
 
+// Function to generate the animation when the player clicks the How to button
 void MainMenu::onClickedHowTo()
 {
     howToPlay_->setStyleSheet("background-color: #B7FF64; font-weight: bold; color: black;"
@@ -91,18 +107,21 @@ void MainMenu::onClickedHowTo()
     QTimer::singleShot(200, this, SLOT (backDefault()));
 }
 
+// Function to generate the animation when the player clicks the Quit button
 void MainMenu::onClickedQuit()
 {
     quit_->setStyleSheet("background-color: #B7FF64; font-weight: bold; color: black;"
                          "font-size: 20px; border-radius: 10px;");
 }
 
+// Function to set the buttons' apperances back to normal (after the player clicked them)
 void MainMenu::backDefault()
 {
     howToPlay_->setStyleSheet("background-color: #84090c; font-weight: bold; color: white;"
                         "font-size: 20px; border-radius: 10px;");
 }
 
+// Function to quit the application (when the player clicks the Quit button)
 void MainMenu::quitApp()
 {
     QCoreApplication::quit();

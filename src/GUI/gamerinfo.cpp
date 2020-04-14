@@ -1,5 +1,11 @@
+/*
+File name: gamerinfo.cpp
+Author: J. LaFerriere
+Date: 14-04-2020
+Description: Implementation of the GamerInfo class
+*/
+
 #include "gamerinfo.h"
-#include <time.h>
 
 GamerInfo::GamerInfo()
 {
@@ -9,6 +15,7 @@ GamerInfo::~GamerInfo()
 {
 }
 
+// Function to get the next item in the list
 unsigned int GamerInfo::getNext()
 {
     if (iterator_ >= listToMemorize_.size())
@@ -19,9 +26,9 @@ unsigned int GamerInfo::getNext()
     return getItem(iterator_++);
 }
 
+// Function to generate the initial vector (for the first turn - contains 3 rats to memorize)
 void GamerInfo::generateListInit()
 {
-    // generate vector for first turn ie 3 images to memorize
     // insert first number
     listToMemorize_.push_back(rand() % 4);
     // insert 2 next ones
@@ -29,6 +36,7 @@ void GamerInfo::generateListInit()
     generateSingle();
 }
 
+// Function to add a rat for the next turns
 void GamerInfo::generateSingle()
 {
     int last = listToMemorize_.back();
@@ -44,6 +52,7 @@ void GamerInfo::generateSingle()
     iterator_ = 0;
 }
 
+// Function to check if iterator is at end of the vector
 bool GamerInfo::checkEnd()
 {
     if (iterator_ == listToMemorize_.size())

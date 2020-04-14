@@ -1,3 +1,10 @@
+/*
+File name: rat.cpp
+Author: J. LaFerriere
+Date: 14-04-2020
+Description: Implementation of the Rat class, which derives from ClickableLabel
+*/
+
 #include "rat.h"
 
 Rat::Rat(const std::string &namePicOn, const std::string &namePicOff): namePicOn_(namePicOn), namePicOff_(namePicOff)

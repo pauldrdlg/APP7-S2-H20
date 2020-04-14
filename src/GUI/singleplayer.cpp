@@ -1,3 +1,10 @@
+/*
+File name: singleplayer.cpp
+Author: J. LaFerriere
+Date: 14-04-2020
+Description: Implementation of the SinglePlayer class
+*/
+
 #include <QPixmap>
 #include <QGridLayout>
 #include <QInputDialog>
@@ -26,7 +33,7 @@ SinglePlayer::SinglePlayer(QWidget *parent) : QWidget(parent)
 
     // adding the default pictures to the layout
     QGridLayout* layout = new QGridLayout();
-    doneButton_ = new QPushButton("Finished ");
+    doneButton_ = new QPushButton("Fini");
     doneButton_->setFixedWidth(250);
     doneButton_->setFixedHeight(70);
 
@@ -75,7 +82,7 @@ void SinglePlayer::start()
     // putting a dialog box for user to inpput name
     nameInputDialog_ = new QInputDialog(this);
     nameInputDialog_->setStyleSheet("background-color: #84090c; font-weight: bold; color: white; font-size: 20px");
-    nameInputDialog_->setLabelText("Please enter name ");
+    nameInputDialog_->setLabelText("Entrez votre nom ");
     nameInputDialog_->setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
     layout()->addWidget(nameInputDialog_);
     connect(nameInputDialog_, SIGNAL (accepted()), this, SLOT (nameEntered()));
@@ -120,7 +127,7 @@ void SinglePlayer::setLastPic()
     numberPics_++;
 
     QMessageBox done;
-    done.setText("Your turn - repeat the sequence by clicking the rats.");
+    done.setText("C'est votre tour.");
     done.setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
     done.setStyleSheet("background-color: #84090c; font-weight: bold; color: white; "
                        "font-size: 20px; padding-left: 0px; padding-right: 25px;");
@@ -154,7 +161,7 @@ void SinglePlayer::checkAnwsers()
     {
         QMessageBox* wellDone = new QMessageBox();
         wellDone->setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
-        QString text = QString("Well played, %1").arg(info_.getName());
+        QString text = QString("Parfait, %1").arg(info_.getName());
         wellDone->setText(text);
         wellDone->setStyleSheet("background-color: #84090c; font-weight: bold; color: white; "
                                 "font-size: 20px; padding-left: 0px; padding-right: 25px;");
@@ -168,7 +175,7 @@ void SinglePlayer::checkAnwsers()
     {
         QMessageBox* endGame = new QMessageBox();
         endGame->setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
-        QString text = QString("You lose, %1.\nPlay again?\n\nFINAL SCORE: %2").arg(info_.getName()).arg(info_.getScore());
+        QString text = QString("RIP, %1.\nNouvelle partie?\n\nSCORE FINAL: %2").arg(info_.getName()).arg(info_.getScore());
         endGame->setText(text);
         endGame->setStandardButtons(QMessageBox::Yes);
         endGame->addButton(QMessageBox::No);

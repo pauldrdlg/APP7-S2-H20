@@ -1,3 +1,10 @@
+/*
+File name: main.cpp
+Author: J. LaFerriere
+Date: 14-04-2020
+Description: Main file for the App
+*/
+
 #include "mainwindow.h"
 #include <time.h>
 #include <QApplication>

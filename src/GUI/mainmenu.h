@@ -1,3 +1,10 @@
+/*
+File name: mainmenu.h
+Author: J. LaFerriere
+Date: 14-04-2020
+Description: Header file for the MainMenu class, an class for generating the main menu page of the app
+*/
+
 #ifndef MAINMENU_H
 #define MAINMENU_H
 
@@ -21,6 +28,7 @@ private slots:
     void onClickedPlay();
     void onClickedHowTo();
     void onClickedQuit();
+	// for the color palette 
     void backDefault();
 
     // signal for when release
@@ -29,9 +37,13 @@ private slots:
     void howTo();
 
 private:
+	// needs to point towards a MainWindow object to set the background
     MainWindow* mainWindow_ = nullptr;
+	// Play button 
     QPushButton* singleP_ = nullptr;
+	// How to play button 
     QPushButton* howToPlay_ = nullptr;
+	// Quit button 
     QPushButton* quit_ = nullptr;
     QPalette* background_ = nullptr;
 };

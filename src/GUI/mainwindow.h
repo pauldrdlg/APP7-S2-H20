@@ -1,3 +1,10 @@
+/*
+File name: mainwindo.h
+Author: J. LaFerriere
+Date: 14-04-2020
+Description: Header file for the MainWindow class which generates the main window for the app
+*/
+
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 

@@ -1,9 +1,15 @@
+/*
+File name: mainwindow.cpp
+Author: J. LaFerriere
+Date: 14-04-2020
+Description: Implementation of the MainWindow class
+*/
+
 #include <QPixmap>
 #include <QVBoxLayout>
 
 #include "mainwindow.h"
 #include "mainmenu.h"
-
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
