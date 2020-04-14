@@ -32,7 +32,7 @@ SinglePlayer::SinglePlayer(QWidget *parent) : QWidget(parent)
     }
 
     // adding the default pictures to the layout
-    QGridLayout* layout = new QGridLayout();
+    QGridLayout* layout = new QGridLayout(this);
     doneButton_ = new QPushButton("Fini");
     doneButton_->setFixedWidth(250);
     doneButton_->setFixedHeight(70);
@@ -69,7 +69,7 @@ SinglePlayer::SinglePlayer(QWidget *parent) : QWidget(parent)
 SinglePlayer::~SinglePlayer()
 {
     delete backgroundS_;
-
+	
     // deleting vector of images
     for(int i = 0; i < 4; i++)
     {
@@ -91,7 +91,7 @@ void SinglePlayer::start()
 void SinglePlayer::countDown()
 {
     // set time between flashing images (ie which image is next in sequence to memorize)
-    timer_= new QTimer;
+    timer_= new QTimer(this);
     int timerInterval = 1500;     // set at 1.5 seconds
     timer_->start(timerInterval);
     connect(timer_, SIGNAL (timeout()), this, SLOT (update()));
@@ -159,7 +159,7 @@ void SinglePlayer::checkAnwsers()
 
     if (isCorrect)
     {
-        QMessageBox* wellDone = new QMessageBox();
+        QMessageBox* wellDone = new QMessageBox(this);
         wellDone->setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
         QString text = QString("Parfait, %1").arg(info_.getName());
         wellDone->setText(text);
@@ -173,7 +173,7 @@ void SinglePlayer::checkAnwsers()
     }
    else
     {
-        QMessageBox* endGame = new QMessageBox();
+        QMessageBox* endGame = new QMessageBox(this);
         endGame->setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
         QString text = QString("RIP, %1.\nNouvelle partie?\n\nSCORE FINAL: %2").arg(info_.getName()).arg(info_.getScore());
         endGame->setText(text);
